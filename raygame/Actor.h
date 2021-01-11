@@ -9,6 +9,7 @@ class Actor
 {
 public:
     Actor() {}
+
     /// <param name="x">Position on the x axis</param>
     /// <param name="y">Position on the y axis</param>
     /// <param name="collisionRadius">The size of the circle surrounding the actor that will be used to detect collisions.</param>
@@ -50,7 +51,6 @@ public:
     /// <param name="value"></param>
     void setForward(MathLibrary::Vector2 value);
     
-    
     /// <returns>A vector representing the position of the object in the world without considering its parent.</returns>
     MathLibrary::Vector2 getWorldPosition();
 
@@ -60,7 +60,6 @@ public:
     /// <param name="value">The new world coordinates to place the actor.</param>
     void setWorldPostion(MathLibrary::Vector2 value);
 
- 
     /// <returns>Returns the position of the actor relative to its parent transform.</returns>
     MathLibrary::Vector2 getLocalPosition();
 
@@ -200,4 +199,3 @@ private:
     int m_childCount;
     Sprite* m_sprite;
 };
-
