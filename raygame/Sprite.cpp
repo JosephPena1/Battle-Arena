@@ -14,6 +14,11 @@ Sprite::Sprite(const char* path)
     m_texture = new Texture2D(RAYLIB_H::LoadTexture(path));
 }
 
+Sprite::~Sprite()
+{
+    delete m_texture;
+}
+
 int Sprite::getWidth()
 {
     return m_texture->width;

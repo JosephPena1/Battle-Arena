@@ -37,6 +37,12 @@ Actor::~Actor()
     delete m_rotation;
     delete m_translation;
     delete m_scale;
+    delete[] m_children;
+    delete m_icon;
+    delete m_velocity;
+    delete m_collisionRadius;
+    delete m_childCount;
+    delete m_maxSpeed;
     delete m_sprite;
 }
 
@@ -133,7 +139,7 @@ bool Actor::removeChild(int index)
     bool actorRemoved = false;
 
     //Create a new array with a size one less than our old array 
-    Actor** newArray = new Actor * [m_childCount + 1];
+    Actor** newArray = new Actor * [m_childCount - 1];
     //Create variable to access tempArray index
     int j = 0;
     //Copy values from the old array to the new array
@@ -168,7 +174,7 @@ bool Actor::removeChild(Actor* child)
 
     bool actorRemoved = false;
     //Create a new array with a size one less than our old array
-    Actor** newArray = new Actor * [m_childCount + 1];
+    Actor** newArray = new Actor * [m_childCount - 1];
     //Create variable to access tempArray index
     int j = 0;
     //Copy values from the old array to the new array
