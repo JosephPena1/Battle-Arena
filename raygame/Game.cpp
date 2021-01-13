@@ -6,6 +6,8 @@ bool Game::m_gameOver = false;
 Scene** Game::m_scenes = new Scene*;
 int Game::m_sceneCount = 0;
 int Game::m_currentSceneIndex = 0;
+float maxTime = 60;
+float timeRemaining = maxTime - GetTime();
 
 
 Game::Game()
@@ -48,6 +50,7 @@ void Game::update(float deltaTime)
 	{
 		m_scenes[i]->update(deltaTime);
 	}
+
 }
 
 void Game::draw()
@@ -55,12 +58,14 @@ void Game::draw()
 	BeginDrawing();
 
 	BeginMode2D(*m_camera);
-	ClearBackground(RAYWHITE);
+	ClearBackground(GREEN);
 
 	for (int i = 0; i < m_sceneCount; i++)
 	{
 		m_scenes[i]->draw();
 	}
+
+	DrawText(TextFormat("%f", timeRemaining), 400, 1, 50, BLACK);
 
 	EndMode2D();
 	EndDrawing();
@@ -209,4 +214,13 @@ void Game::destroy(Actor* actor)
 void Game::setGameOver(bool value)
 {
 	Game::m_gameOver = value;
+}
+
+bool Game::timer()
+{
+	if (GetTime() - maxTime == 0)
+	{
+		return true;
+	}
+	return false;
 }
