@@ -35,14 +35,10 @@ void Game::start()
 
 	SetTargetFPS(60);
 
-	Scene* scene{};
-	addScene(scene);
-
-	Player* player = new Player(2, 2, 5, 'P', 10);
-
+	Player* player = new Player(10, 10, 5, "Images/player.png", 5);
+	Scene* scene = new Scene();
 	scene->addActor(player);
-
-	setCurrentScene(0);
+	addScene(scene);
 
 }
 
