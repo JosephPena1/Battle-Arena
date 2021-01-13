@@ -2,7 +2,7 @@
 #include "raylib.h"
 #include "Sprite.h"
 
-Player::Player(float x, float y, float health, float damage, float collisionRadius, char icon, float maxSpeed)
+Player::Player(float x, float y, float collisionRadius, char icon, float maxSpeed)
 {
     m_globalTransform = new MathLibrary::Matrix3();
     m_localTransform = new MathLibrary::Matrix3();
@@ -16,24 +16,35 @@ Player::Player(float x, float y, float health, float damage, float collisionRadi
     m_maxSpeed = maxSpeed;
 }
 
-Player::Player(float x, float y, float health, float damage, float collisionRadius, Sprite* sprite, float maxSpeed)
+Player::Player(float x, float y, float collisionRadius, Sprite* sprite, float maxSpeed)
 {
     m_sprite = sprite;
 }
 
-Player::Player(float x, float y, float health, float damage, float collisionRadius, const char* spriteFilePath, float maxSpeed)
+Player::Player(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed)
 {
     m_sprite = new Sprite(spriteFilePath);
 }
 
+Player::~Player()
+{
+    delete m_globalTransform;
+    delete m_localTransform;
+    delete m_rotation;
+    delete m_translation;
+    delete m_scale;
+    delete[] m_children;
+    delete m_sprite;
+}
+
 void Player::onCollision(Actor* other)
 {
-    Actor::onCollision(other);
+
 }
 
 void Player::start()
 {
-	Actor::start();
+
 }
 
 void Player::update(float deltaTime)
@@ -42,7 +53,7 @@ void Player::update(float deltaTime)
 
 	//controls for player below here
 
-	Actor::update(deltaTime);
+
 }
 
 void Player::draw()
@@ -60,7 +71,7 @@ void Player::draw()
 
     if (m_sprite)
         m_sprite->draw(*m_globalTransform);
-    Actor::draw();
+
 }
 
 void Player::debug()
@@ -70,7 +81,7 @@ void Player::debug()
 
 void Player::end()
 {
-    Actor::end();
+
 }
 
 //updates the player's current facing

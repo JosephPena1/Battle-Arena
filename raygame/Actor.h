@@ -31,7 +31,7 @@ public:
     Actor(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed);
 
     /// <summary>
-    /// Deconstructor of the Actors
+    /// Deconstructor for Actors
     /// </summary> 
     ~Actor();
 

@@ -38,11 +38,11 @@ void Game::start()
 	Scene* scene{};
 	addScene(scene);
 
-	Player* player = new Player(2, 2, 100, 10, 5, 'P', 10);
+	Player* player = new Player(2, 2, 5, 'P', 10);
 
 	scene->addActor(player);
 
-	int startingSceneIndex = 0;
+	setCurrentScene(0);
 
 }
 
