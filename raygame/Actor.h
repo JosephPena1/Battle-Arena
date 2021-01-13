@@ -31,6 +31,11 @@ public:
     Actor(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed);
 
     /// <summary>
+    /// Deconstructor of the Actors
+    /// </summary> 
+    ~Actor();
+
+    /// <summary>
     /// </summary>
     /// <returns>If the actors start function has been called.</returns>
     bool getStarted() { return m_started; }

@@ -30,6 +30,17 @@ Actor::Actor(float x, float y, float collisionRadius, const char* spriteFilePath
     m_sprite = new Sprite(spriteFilePath);
 }
 
+Actor::~Actor()
+{
+    delete m_globalTransform;
+    delete m_localTransform;
+    delete m_rotation;
+    delete m_translation;
+    delete m_scale;
+    delete[] m_children;
+    delete m_sprite;
+}
+
 MathLibrary::Vector2 Actor::getForward()
 {
     return MathLibrary::Vector2(m_globalTransform->m11, m_globalTransform->m21).getNormalized();

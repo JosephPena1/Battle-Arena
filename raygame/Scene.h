@@ -6,6 +6,8 @@ class Scene
 public:
     Scene();
 
+    ~Scene();
+
     /// <returns>If this scene is the current active scene in the game.</returns>
     bool getStarted() { return m_started; }
 

@@ -17,6 +17,12 @@ Game::Game()
 	m_sceneCount = 0;
 }
 
+Game::~Game()
+{
+	delete m_scenes;
+	delete m_camera;
+}
+
 void Game::start()
 {
 	int screenWidth = 1024;
