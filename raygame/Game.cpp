@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Player.h"
 #include "raylib.h"
 
 bool Game::m_gameOver = false;
@@ -21,12 +22,22 @@ void Game::start()
 	int screenWidth = 1024;
 	int screenHeight = 760;
 
-	InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+	InitWindow(screenWidth, screenHeight, "Battle-Arena");
 	m_camera->offset = { (float)screenWidth / 2, (float)screenHeight / 2 };
 	m_camera->target = { (float)screenWidth / 2, (float)screenHeight / 2 };
 	m_camera->zoom = 1;
 
 	SetTargetFPS(60);
+
+	Scene* scene{};
+	addScene(scene);
+
+	Player* player = new Player(2, 2, 100, 10, 5, 'P', 10);
+
+	scene->addActor(player);
+
+	int startingSceneIndex = 0;
+
 }
 
 void Game::update(float deltaTime)
