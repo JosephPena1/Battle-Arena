@@ -21,16 +21,21 @@ void Player::update(float deltaTime)
 {
 	updateFacing();
 
-    //setAcceleration(MathLibrary::Vector2());
-
 	//controls for player
     int xDirection = -Game::getKeyDown(KEY_A) + Game::getKeyDown(KEY_D);
     int yDirection = -Game::getKeyDown(KEY_W) + Game::getKeyDown(KEY_S);
+
+    setAcceleration(MathLibrary::Vector2(xDirection, yDirection));
 
     if (getVelocity().getMagnitude() > 0)
         lookAt(getWorldPosition() + getVelocity().getNormalized());
 
     Actor::update(deltaTime);
+}
+
+void Player::debug()
+{
+
 }
 
 //updates the player's current facing
