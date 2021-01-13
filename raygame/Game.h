@@ -43,13 +43,11 @@ public:
     /// <returns>If the scene was successfully removed</returns>
     static bool removeScene(Scene* scene);
 
-
     /// <summary>
     /// Sets the current scene in the game to be the scene at the given index
     /// </summary>
     /// <param name="index">The index of the scene to switch to</param>
     static void setCurrentScene(int index);
-
 
     /// <summary>
     /// Returns true while a key is being pressed
