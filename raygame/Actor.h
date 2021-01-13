@@ -171,7 +171,7 @@ protected:
     /// Updates the actors forward vector to be
     /// the last direction it moved in
     /// </summary>
-    void updateFacing();
+    virtual void updateFacing();
 
 private:
     /// <summary>
