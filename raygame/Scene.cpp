@@ -9,7 +9,6 @@ Scene::Scene()
 
 Scene::~Scene()
 {
-    delete m_actorCount;
     delete m_actors;
     delete m_world;
 }

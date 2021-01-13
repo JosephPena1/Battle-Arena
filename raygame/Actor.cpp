@@ -38,11 +38,6 @@ Actor::~Actor()
     delete m_translation;
     delete m_scale;
     delete[] m_children;
-    delete m_icon;
-    delete m_velocity;
-    delete m_collisionRadius;
-    delete m_childCount;
-    delete m_maxSpeed;
     delete m_sprite;
 }
 

@@ -18,11 +18,8 @@ Game::Game()
 
 Game::~Game()
 {
-	delete m_gameOver;
 	delete m_scenes;
 	delete m_camera;
-	delete m_currentSceneIndex;
-	delete m_sceneCount;
 }
 
 void Game::start()
