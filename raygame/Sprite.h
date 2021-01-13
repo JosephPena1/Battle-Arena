@@ -7,6 +7,8 @@ class Sprite
 public:
     Sprite() {}
 
+    ~Sprite(); 
+
     /// <summary>
     /// Loads the given texture
     /// </summary>

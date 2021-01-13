@@ -6,6 +6,9 @@ static class Game
 {
 public:
     Game();
+
+    ~Game();
+
     /// <summary>
     /// Returns the scene at the index given.
     /// Returns an empty scene if the index is out of bounds
@@ -13,7 +16,6 @@ public:
     /// <param name="index">The index of the desired scene</param>
     /// <returns></returns>
     static Scene* getScene(int index);
-
 
     /// <summary>
     /// Returns the scene that is at the index of the 
