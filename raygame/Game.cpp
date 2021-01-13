@@ -6,8 +6,8 @@ bool Game::m_gameOver = false;
 Scene** Game::m_scenes = new Scene*;
 int Game::m_sceneCount = 0;
 int Game::m_currentSceneIndex = 0;
-float maxTime = 60;
-float timeRemaining = maxTime - GetTime();
+float maxTime;
+float timeRemaining;
 
 
 Game::Game()
@@ -42,6 +42,7 @@ void Game::start()
 	scene->addActor(player);
 	addScene(scene);
 
+	maxTime = 60;
 }
 
 void Game::update(float deltaTime)
@@ -51,6 +52,7 @@ void Game::update(float deltaTime)
 		m_scenes[i]->update(deltaTime);
 	}
 
+	timeRemaining = maxTime - GetTime();
 }
 
 void Game::draw()
