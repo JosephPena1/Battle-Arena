@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "raylib.h"
 
 bool Game::m_gameOver = false;
@@ -36,8 +37,12 @@ void Game::start()
 	SetTargetFPS(60);
 
 	Player* player = new Player(10, 10, 5, "Images/player.png", 5);
+	Enemy* enemy = new Enemy(10, 20, 5, "Images/player.png", 2);
 	Scene* scene = new Scene();
+	enemy->setTarget(player);
+
 	scene->addActor(player);
+	scene->addActor(enemy);
 	addScene(scene);
 
 }
@@ -55,7 +60,7 @@ void Game::draw()
 	BeginDrawing();
 
 	BeginMode2D(*m_camera);
-	ClearBackground(RAYWHITE);
+	ClearBackground(DARKGREEN);
 
 	for (int i = 0; i < m_sceneCount; i++)
 	{
