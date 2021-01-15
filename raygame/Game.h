@@ -98,4 +98,5 @@ private:
     static int m_currentSceneIndex;
     float maxTime;   //Varible that sets the max time for the players to play
     float timeRemaining;   //find the remaining time the player has by subtracting the maxTime by the current time
+    float startingTime; //Gives player 6 seconds before game starts
 };
