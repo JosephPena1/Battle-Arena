@@ -79,6 +79,11 @@ public:
     static MathLibrary::Matrix3* getWorld();
     void run();
 
+    /// <summary>
+    /// returns true or false whether the player has run out of time to kill enemies 
+    /// </summary>
+    bool timer();
+
 private:
 	void start();
 	void update(float delaTime);
@@ -91,4 +96,7 @@ private:
 	static Scene** m_scenes;
     static int m_sceneCount;
     static int m_currentSceneIndex;
+    float maxTime;   //Varible that sets the max time for the players to play
+    float timeRemaining;   //find the remaining time the player has by subtracting the maxTime by the current time
+    float startingTime; //Gives player 6 seconds before game starts
 };
