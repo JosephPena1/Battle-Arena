@@ -42,14 +42,14 @@ void Enemy::update(float deltatime)
 {
     updateFacing();
 
-    //if target is in range, follow
+    // [if] target is in range, follow
     if (detectTarget(5, 5) == true)
     {
         setAcceleration(m_target->getLocalPosition() - getLocalPosition());
     }
 
-    //else slow to a stop \WIP
-    else
+    // [else] slow to a stop \WIP
+    /*else
     {
         if ((getAcceleration().x || getAcceleration().y > 0) || (getAcceleration().x || getAcceleration().y < 0))
             setAcceleration(MathLibrary::Vector2(0, 0));
@@ -57,17 +57,14 @@ void Enemy::update(float deltatime)
         if ((getVelocity().x || getVelocity().y > 0) || (getVelocity().x || getVelocity().y < 0))
             setVelocity(MathLibrary::Vector2(0, 0));
         
-    }
+    }*/
 
-    debug();
-    
     Actor::update(deltatime);
 }
 
 void Enemy::debug()
 {
-    //std::cout << "X: " << getAcceleration().x << std::endl;
-    //std::cout << "Y: " << getAcceleration().y << std::endl;
+
 }
 
 void Enemy::draw()
