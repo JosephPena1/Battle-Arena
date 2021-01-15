@@ -9,6 +9,7 @@ int Game::m_sceneCount = 0;
 int Game::m_currentSceneIndex = 0;
 float countDown;
 
+//IDEAS\\Can create a bool variable, if time runs out or player dies, bool = true
 
 Game::Game()
 {
