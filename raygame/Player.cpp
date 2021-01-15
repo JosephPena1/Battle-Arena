@@ -30,6 +30,10 @@ void Player::update(float deltaTime)
     if (getVelocity().getMagnitude() > 0)
         lookAt(getWorldPosition() + getVelocity().getNormalized());
 
+    //if left control is pressed down, slow down acceleration \WIP
+    if (Game::getKeyDown(KEY_LEFT_CONTROL) == true)
+        setAcceleration(getAcceleration() / 10);
+
     Actor::update(deltaTime);
 }
 
