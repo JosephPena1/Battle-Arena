@@ -39,16 +39,17 @@ void Game::start()
 	SetTargetFPS(60);
 
 	Player* player = new Player(10, 10, 5, "Images/player.png", 5);
-	Enemy* enemy = new Enemy(10, 20, 5, "Images/player.png", 2);
+	Enemy* enemy = new Enemy(10, 20, 5, "Images/player.png", 2, player);
+	Enemy* enemy2 = new Enemy(5, 20, 5, "Images/player.png", 2, player);
 	Scene* scene = new Scene();
-	enemy->setTarget(player);
 
 	scene->addActor(player);
 	scene->addActor(enemy);
+	scene->addActor(enemy2);
 	addScene(scene);
 
-	startingTime = 5;
-	maxTime = 60 + startingTime;
+	startingTime = 0; //default 5
+	maxTime = 6 + startingTime; //default 60
 }
 
 void Game::update(float deltaTime)
@@ -60,6 +61,13 @@ void Game::update(float deltaTime)
 
 	countDown = startingTime - GetTime();
 	timeRemaining = maxTime - GetTime();
+
+	//when time runs out, give lose message, then gameOver = true
+	if (timeRemaining <= 0)
+	{
+		//Game::setGameOver(true);
+	}
+		
 }
 
 void Game::draw()
@@ -77,8 +85,10 @@ void Game::draw()
 	//Draws the timer to the screen
 	if (countDown > 0)
 		DrawText(TextFormat("%f", countDown), 400, 1, 50, BLACK);
-	else 
+	else if (timeRemaining > 0)
 		DrawText(TextFormat("%f", timeRemaining), 400, 1, 50, BLACK);
+	else 
+		DrawText("You Lose, press esc to quit", 250, 1, 40, BLACK);
 	
 	EndMode2D();
 	EndDrawing();

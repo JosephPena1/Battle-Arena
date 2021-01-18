@@ -15,11 +15,16 @@ Player::Player(float x, float y, float collisionRadius, const char* spriteFilePa
     setLocalPosition(MathLibrary::Vector2(x, y));
     m_velocity = MathLibrary::Vector2();
     m_maxSpeed = maxSpeed;
+    m_health = 3;
+    m_collisionRadius = collisionRadius;
 }
 
 void Player::update(float deltaTime)
 {
 	updateFacing();
+
+    /*if (checkCollision(m_target) == true)
+        return false;*/
 
 	//controls for player
     int xDirection = -Game::getKeyDown(KEY_A) + Game::getKeyDown(KEY_D);
@@ -40,6 +45,35 @@ void Player::update(float deltaTime)
 void Player::debug()
 {
 
+}
+
+void Player::draw()
+{
+    DrawCircle(getWorldPosition().x * 32, getWorldPosition().y * 32, 50, DARKBLUE);
+    //Draws the actor and a line indicating it facing to the raylib window
+    DrawLine(
+        (int)(getWorldPosition().x * 32),
+        (int)(getWorldPosition().y * 32),
+        (int)((getWorldPosition().x + getForward().x) * 32),
+        (int)((getWorldPosition().y + getForward().y) * 32),
+        WHITE
+    );
+
+    if (m_sprite)
+        m_sprite->draw(*m_globalTransform);
+
+    Actor::draw();
+}
+
+void Player::onCollision(Actor* other)
+{
+
+    Actor::onCollision(other);
+}
+
+void Player::takeDamage()
+{
+    m_health -= 1;
 }
 
 //updates the player's current facing
