@@ -21,6 +21,4 @@ protected:
 
 private:
 	Actor* m_target;
-	float m_collisionRadius;
-	Sprite* m_sprite;
 };

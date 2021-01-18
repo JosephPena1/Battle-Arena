@@ -4,7 +4,7 @@
 #include "Sprite.h"
 #include <cmath>
 
-Enemy::Enemy(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed, Actor* target)
+Enemy::Enemy(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed, Actor* target) : Actor(x, y, collisionRadius, spriteFilePath, maxSpeed)
 {
     m_globalTransform = new MathLibrary::Matrix3();
     m_localTransform = new MathLibrary::Matrix3();
@@ -15,7 +15,6 @@ Enemy::Enemy(float x, float y, float collisionRadius, const char* spriteFilePath
     setLocalPosition(MathLibrary::Vector2(x, y));
     m_velocity = MathLibrary::Vector2();
     m_maxSpeed = maxSpeed;
-    m_collisionRadius = collisionRadius;
     m_target = target;
 }
 
@@ -74,18 +73,18 @@ void Enemy::debug()
 
 void Enemy::draw()
 {
-    DrawCircle(getWorldPosition().x * 32, getWorldPosition().y * 32, 50, RED);
-    //Draws the actor and a line indicating it facing to the raylib window
-    DrawLine(
-        (int)(getWorldPosition().x * 32),
-        (int)(getWorldPosition().y * 32),
-        (int)((getWorldPosition().x + getForward().x) * 32),
-        (int)((getWorldPosition().y + getForward().y) * 32),
-        WHITE
-    );
+    //DrawCircle(getWorldPosition().x * 32, getWorldPosition().y * 32, 50, RED);
+    ////Draws the actor and a line indicating it facing to the raylib window
+    //DrawLine(
+    //    (int)(getWorldPosition().x * 32),
+    //    (int)(getWorldPosition().y * 32),
+    //    (int)((getWorldPosition().x + getForward().x) * 32),
+    //    (int)((getWorldPosition().y + getForward().y) * 32),
+    //    WHITE
+    //);
 
-    if (m_sprite)
-        m_sprite->draw(*m_globalTransform);
+    //if (m_sprite)
+    //    m_sprite->draw(*m_globalTransform);
 
     Actor::draw();
 }

@@ -20,9 +20,4 @@ protected:
 
 private:
 	float m_health;
-	float m_collisionRadius;
-	Actor** m_actors;
-	int m_actorCount;
-	Sprite* m_sprite;
-
 };
