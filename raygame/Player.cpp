@@ -20,7 +20,7 @@ Player::Player(float x, float y, float collisionRadius, const char* spriteFilePa
 
 void Player::update(float deltaTime)
 {
-	updateFacing();
+	//updateFacing(); //fix
 
     /*if (checkCollision(m_target) == true)
         return false;*/

@@ -70,10 +70,16 @@ public:
     static void destroy(Actor* actor);
 
     /// <summary>
-    /// Sets the game state to be the given value. If true, the game will end.
+    /// Sets the game state to be the given value. If true, the gameplay loop will end.
     /// </summary>
     /// <param name="value">The value to set game over.</param>
     static void setGameOver(bool value);
+
+    /// <summary>
+    /// Sets the game state to be the given value. If true, the game will end.
+    /// </summary>
+    /// <param name="value">The value to set game over.</param>
+    static void setTrueGameOver(bool value);
 
     /// <returns>The world matrix of the current scene.</returns>
     static MathLibrary::Matrix3* getWorld();
@@ -92,7 +98,9 @@ private:
 
 private:
     Camera2D* m_camera;
+    static int m_playerChoice;
     static bool m_gameOver;
+    static bool m_trueGameOver;
 	static Scene** m_scenes;
     static int m_sceneCount;
     static int m_currentSceneIndex;

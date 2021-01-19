@@ -96,7 +96,7 @@ void Enemy::setTarget(Actor* target)
 
 void Enemy::onCollision(Actor* other)
 {
-    setLocalPosition(MathLibrary::Vector2(2, 2));
+    //setLocalPosition(MathLibrary::Vector2(2, 2));
 
     //other->takeDamage();
 

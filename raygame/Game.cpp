@@ -4,6 +4,8 @@
 #include "raylib.h"
 
 bool Game::m_gameOver = false;
+bool Game::m_trueGameOver = false;
+int Game::m_playerChoice = 0;
 Scene** Game::m_scenes = new Scene*;
 int Game::m_sceneCount = 0;
 int Game::m_currentSceneIndex = 0;
@@ -20,6 +22,8 @@ Game::Game()
 	m_sceneCount = 0;
 }
 
+//If lose condition is met, delete then add a scene to ask if they want to play again.
+//if not gameOver = true, else call game start again
 Game::~Game()
 {
 	delete m_scenes;
@@ -39,9 +43,14 @@ void Game::start()
 	SetTargetFPS(60);
 
 	Player* player = new Player(10, 10, 5, "Images/player.png", 5);
-	Enemy* enemy = new Enemy(10, 20, 5, "Images/player.png", 2, player);
-	Enemy* enemy2 = new Enemy(5, 20, 5, "Images/player.png", 2, player);
+	Enemy* enemy = new Enemy(10, 20, 5, "Images/enemy.png", 2, player);
+	Enemy* enemy2 = new Enemy(5, 20, 5, "Images/enemy.png", 2, player);
+
 	Scene* scene = new Scene();
+
+	player->setScale(MathLibrary::Vector2(3, 3));
+	enemy->setScale(MathLibrary::Vector2(3, 3));
+	enemy2->setScale(MathLibrary::Vector2(3, 3));
 
 	scene->addActor(player);
 	scene->addActor(enemy);
@@ -99,6 +108,11 @@ void Game::end()
 	CloseWindow();
 }
 
+void Game::setTrueGameOver(bool value)
+{
+	Game::m_trueGameOver = value;
+}
+
 MathLibrary::Matrix3* Game::getWorld()
 {
 	return getCurrentScene()->getWorld();
@@ -108,13 +122,16 @@ void Game::run()
 {
 	start();
 
-	while (!m_gameOver && !RAYLIB_H::WindowShouldClose())
+	while (!m_trueGameOver)
 	{
-		float deltaTime = RAYLIB_H::GetFrameTime();
-		update(deltaTime);
-		draw();
+		while (!m_gameOver && !RAYLIB_H::WindowShouldClose())
+		{
+			float deltaTime = RAYLIB_H::GetFrameTime();
+			update(deltaTime);
+			draw();
+		}
 	}
-
+	
 	end();
 }
 
