@@ -4,7 +4,7 @@
 #include "Sprite.h"
 #include <cmath>
 
-Player::Player(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed) : Actor(x, y, collisionRadius, spriteFilePath, maxSpeed)
+Player::Player(float x, float y, float health, float collisionRadius, const char* spriteFilePath, float maxSpeed) : Actor(x, y, health, collisionRadius, spriteFilePath, maxSpeed)
 {
     m_globalTransform = new MathLibrary::Matrix3();
     m_localTransform = new MathLibrary::Matrix3();
@@ -15,28 +15,51 @@ Player::Player(float x, float y, float collisionRadius, const char* spriteFilePa
     setLocalPosition(MathLibrary::Vector2(x, y));
     m_velocity = MathLibrary::Vector2();
     m_maxSpeed = maxSpeed;
-    m_health = 3;
+    m_health = health;
 }
 
 void Player::update(float deltaTime)
 {
-	//updateFacing(); //fix
+    if (!Game::getWin() && !Game::getLose())
+    {
+        updateFacing(); //fix
 
-    /*if (checkCollision(m_target) == true)
-        return false;*/
+        /*if (checkCollision(m_target) == true)
+            return false;*/
 
-	//controls for player
-    int xDirection = -Game::getKeyDown(KEY_A) + Game::getKeyDown(KEY_D);
-    int yDirection = -Game::getKeyDown(KEY_W) + Game::getKeyDown(KEY_S);
+        //controls for player
+        int xDirection = -Game::getKeyDown(KEY_A) + Game::getKeyDown(KEY_D);
+        int yDirection = -Game::getKeyDown(KEY_W) + Game::getKeyDown(KEY_S);
 
-    setAcceleration(MathLibrary::Vector2(xDirection, yDirection));
+        setAcceleration(MathLibrary::Vector2(xDirection, yDirection));
 
-    if (getVelocity().getMagnitude() > 0)
-        lookAt(getWorldPosition() + getVelocity().getNormalized());
+        /*if (getVelocity().getMagnitude() > 0)
+            lookAt(getWorldPosition() + getVelocity().getNormalized());*/
 
-    //if left control is pressed down, slow down acceleration \WIP
-    if (Game::getKeyDown(KEY_LEFT_CONTROL) == true)
-        setAcceleration(getAcceleration() / 10);
+        //if left control is pressed down, slow down acceleration \WIP
+        if (Game::getKeyDown(KEY_LEFT_CONTROL) == true)
+        {
+            setAcceleration(getAcceleration() / 1.50f);
+            setVelocity(getVelocity() / 1.50f);
+        }
+    }
+
+    else
+    {
+        if (Game::getKeyDown(KEY_ENTER))
+        {
+            Game::setWin(false);
+            Game::setLose(false);
+            Game::setPlayerChoice(true);
+            Game::setGameOver(true);
+        }
+        else
+            Game::setGameOver(true);
+
+        setVelocity(MathLibrary::Vector2(0, 0));
+        setAcceleration(MathLibrary::Vector2(0, 0));
+    }
+	
 
     Actor::update(deltaTime);
 }
@@ -66,13 +89,14 @@ void Player::draw()
 
 void Player::onCollision(Actor* other)
 {
-
     Actor::onCollision(other);
 }
 
 void Player::takeDamage()
 {
     m_health -= 1;
+
+    Actor::takeDamage();
 }
 
 //updates the player's current facing

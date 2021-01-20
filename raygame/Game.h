@@ -1,4 +1,6 @@
 #pragma once
+#include "Player.h"
+#include "Enemy.h"
 #include "Scene.h"
 class Camera2D;
 
@@ -63,23 +65,31 @@ public:
     /// <returns></returns>
     static bool getKeyPressed(int key);
 
+    static bool getWin() { return m_win; }
+
+    static bool getLose() { return m_lose; }
+
+    static bool getPlayerChoice() { return m_playerChoice; }
+
+    static void setWin(bool value);
+
+    static void setLose(bool value);
+
+    static void setPlayerChoice(bool value);
+
     /// <summary>
     /// Removes the actor from the scene, removes it from its parent, calls its end function, and deletes the actor.
     /// </summary>
     /// <param name="actor">The actor that will be deleted.</param>
     static void destroy(Actor* actor);
 
+    void restart();
+
     /// <summary>
     /// Sets the game state to be the given value. If true, the gameplay loop will end.
     /// </summary>
     /// <param name="value">The value to set game over.</param>
     static void setGameOver(bool value);
-
-    /// <summary>
-    /// Sets the game state to be the given value. If true, the game will end.
-    /// </summary>
-    /// <param name="value">The value to set game over.</param>
-    static void setTrueGameOver(bool value);
 
     /// <returns>The world matrix of the current scene.</returns>
     static MathLibrary::Matrix3* getWorld();
@@ -97,10 +107,14 @@ private:
 	void end();
 
 private:
+    Player* player;
+    Enemy* enemy;
+    Enemy* enemy2;
     Camera2D* m_camera;
-    static int m_playerChoice;
     static bool m_gameOver;
-    static bool m_trueGameOver;
+    static bool m_win;
+    static bool m_lose;
+    static bool m_playerChoice;
 	static Scene** m_scenes;
     static int m_sceneCount;
     static int m_currentSceneIndex;

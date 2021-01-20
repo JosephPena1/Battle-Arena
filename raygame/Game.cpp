@@ -4,14 +4,13 @@
 #include "raylib.h"
 
 bool Game::m_gameOver = false;
-bool Game::m_trueGameOver = false;
-int Game::m_playerChoice = 0;
+bool Game::m_win = false;
+bool Game::m_lose = false;
+bool Game::m_playerChoice = true;
 Scene** Game::m_scenes = new Scene*;
 int Game::m_sceneCount = 0;
 int Game::m_currentSceneIndex = 0;
 float countDown;
-
-//IDEAS\\Can create a bool variable, if time runs out or player dies, bool = true
 
 Game::Game()
 {
@@ -22,8 +21,6 @@ Game::Game()
 	m_sceneCount = 0;
 }
 
-//If lose condition is met, delete then add a scene to ask if they want to play again.
-//if not gameOver = true, else call game start again
 Game::~Game()
 {
 	delete m_scenes;
@@ -42,9 +39,9 @@ void Game::start()
 
 	SetTargetFPS(60);
 
-	Player* player = new Player(10, 10, 5, "Images/player.png", 5);
-	Enemy* enemy = new Enemy(10, 20, 5, "Images/enemy.png", 2, player);
-	Enemy* enemy2 = new Enemy(5, 20, 5, "Images/enemy.png", 2, player);
+	player = new Player(10, 10, 3, 5, "Images/player.png", 5);
+	enemy = new Enemy(10, 20, 2, 5, "Images/enemy.png", 2, player);
+	enemy2 = new Enemy(5, 20, 2, 5, "Images/enemy.png", 2, player);
 
 	Scene* scene = new Scene();
 
@@ -58,7 +55,7 @@ void Game::start()
 	addScene(scene);
 
 	startingTime = 0; //default 5
-	maxTime = 6 + startingTime; //default 60
+	maxTime = 10 + startingTime; //default 60
 }
 
 void Game::update(float deltaTime)
@@ -74,6 +71,7 @@ void Game::update(float deltaTime)
 	//when time runs out, give lose message, then gameOver = true
 	if (timeRemaining <= 0)
 	{
+		Game::m_lose = true;
 		//Game::setGameOver(true);
 	}
 		
@@ -96,8 +94,6 @@ void Game::draw()
 		DrawText(TextFormat("%f", countDown), 400, 1, 50, BLACK);
 	else if (timeRemaining > 0)
 		DrawText(TextFormat("%f", timeRemaining), 400, 1, 50, BLACK);
-	else 
-		DrawText("You Lose, press esc to quit", 250, 1, 40, BLACK);
 	
 	EndMode2D();
 	EndDrawing();
@@ -106,11 +102,6 @@ void Game::draw()
 void Game::end()
 {
 	CloseWindow();
-}
-
-void Game::setTrueGameOver(bool value)
-{
-	Game::m_trueGameOver = value;
 }
 
 MathLibrary::Matrix3* Game::getWorld()
@@ -122,16 +113,15 @@ void Game::run()
 {
 	start();
 
-	while (!m_trueGameOver)
+	while (!m_gameOver && !RAYLIB_H::WindowShouldClose())
 	{
-		while (!m_gameOver && !RAYLIB_H::WindowShouldClose())
-		{
-			float deltaTime = RAYLIB_H::GetFrameTime();
-			update(deltaTime);
-			draw();
-		}
+		float deltaTime = RAYLIB_H::GetFrameTime();
+		update(deltaTime);
+		draw();
 	}
-	
+	/*if (m_playerChoice == true)
+		restart();*/
+
 	end();
 }
 
@@ -242,6 +232,21 @@ bool Game::getKeyPressed(int key)
 	return RAYLIB_H::IsKeyPressed((KeyboardKey)key);
 }
 
+void Game::setWin(bool value)
+{
+	m_win = value;
+}
+
+void Game::setLose(bool value)
+{
+	m_lose = value;
+}
+
+void Game::setPlayerChoice(bool value)
+{
+	m_playerChoice = value;
+}
+
 void Game::destroy(Actor* actor)
 {
 	getCurrentScene()->removeActor(actor);
@@ -249,6 +254,23 @@ void Game::destroy(Actor* actor)
 		actor->getParent()->removeChild(actor);
 	actor->end();
 	delete actor;
+}
+
+void Game::restart()
+{
+	m_playerChoice = false;
+	m_gameOver = false;
+	Scene* scene = getCurrentScene();
+
+	scene->removeActor(player);
+	scene->removeActor(enemy);
+	scene->removeActor(enemy2);
+	delete player;
+	delete enemy;
+	delete enemy2;
+
+	end();
+	run();
 }
 
 void Game::setGameOver(bool value)

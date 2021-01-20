@@ -1,10 +1,10 @@
-
-#include <cmath>
 #include "Actor.h"
-#include "raylib.h"
 #include "Sprite.h"
+#include "raylib.h"
+#include "Game.h"
+#include <cmath>
 
-Actor::Actor(float x, float y, float collisionRadius, char icon = ' ', float maxSpeed = 1)
+Actor::Actor(float x, float y, float health, float collisionRadius, char icon = ' ', float maxSpeed = 1)
 {
     m_globalTransform = new MathLibrary::Matrix3();
     m_localTransform = new MathLibrary::Matrix3();
@@ -18,14 +18,15 @@ Actor::Actor(float x, float y, float collisionRadius, char icon = ' ', float max
     m_collisionRadius = collisionRadius;
     m_childCount = 0;
     m_maxSpeed = maxSpeed;
+    m_health = health;
 }
 
-Actor::Actor(float x, float y, float collisionRadius, Sprite* sprite, float maxSpeed = 1) : Actor(x, y, collisionRadius, ' ', maxSpeed)
+Actor::Actor(float x, float y, float health, float collisionRadius, Sprite* sprite, float maxSpeed = 1) : Actor(x, y, collisionRadius, ' ', maxSpeed)
 {
     m_sprite = sprite;
 }
 
-Actor::Actor(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed = 1) : Actor(x, y, collisionRadius, ' ', maxSpeed)
+Actor::Actor(float x, float y, float health, float collisionRadius, const char* spriteFilePath, float maxSpeed = 1) : Actor(x, y, collisionRadius, ' ', maxSpeed)
 {
     m_sprite = new Sprite(spriteFilePath);
 }
@@ -245,6 +246,12 @@ bool Actor::checkCollision(Actor* other)
 
 void Actor::onCollision(Actor* other)
 {
+
+}
+
+void Actor::takeDamage()
+{
+    m_health -= 1;
 }
 
 void Actor::update(float deltaTime)
@@ -264,19 +271,41 @@ void Actor::update(float deltaTime)
 
 void Actor::draw()
 {
-    //DrawCircle(getWorldPosition().x * 32, getWorldPosition().y * 32, 50, BLUE);
-    //Draws the actor and a line indicating it facing to the raylib window
-    DrawLine(
-        (int)(getWorldPosition().x * 32),
-        (int)(getWorldPosition().y * 32),
-        (int)((getWorldPosition().x + getForward().x) * 32),
-        (int)((getWorldPosition().y + getForward().y) * 32),
-        WHITE
-    );
+    //draws to the screen if player hasn't won or lost yet
+    if (!Game::getWin() && !Game::getLose())
+    {
+        //DrawCircle(getWorldPosition().x * 32, getWorldPosition().y * 32, 50, BLUE);
+        //Draws the actor and a line indicating it facing to the raylib window
+        DrawLine(
+            (int)(getWorldPosition().x * 32),
+            (int)(getWorldPosition().y * 32),
+            (int)((getWorldPosition().x + getForward().x) * 32),
+            (int)((getWorldPosition().y + getForward().y) * 32),
+            WHITE
+        );
 
-    if (m_sprite)
-        m_sprite->draw(*m_globalTransform);
-    //Raylib.DrawCircleLines((int)(WorldPosition.X * 32), (int)(WorldPosition.Y * 32), _collisionRadius * 32, _rayColor);
+        if (m_sprite)
+            m_sprite->draw(*m_globalTransform);
+        //Raylib.DrawCircleLines((int)(WorldPosition.X * 32), (int)(WorldPosition.Y * 32), _collisionRadius * 32, _rayColor);
+    }
+    
+    //displays win or lose text
+    else
+    {
+        if (Game::getWin() == true)
+        {
+            DrawText("You Win!", 10, 10, 30, BLACK);
+            DrawText("[ENTER] Play Again?", 10, 35, 30, BLACK);
+            DrawText("[ESC] Quit?", 10, 60, 30, BLACK);
+        }
+        else
+        {
+            DrawText("You Lose!", 10, 10, 30, BLACK);
+            DrawText("[ENTER] Play Again?", 10, 35, 30, BLACK);
+            DrawText("[ESC] Quit?", 10, 60, 30, BLACK);
+        }
+        
+    }
 }
 
 void Actor::debug()

@@ -4,7 +4,7 @@
 #include "Sprite.h"
 #include <cmath>
 
-Enemy::Enemy(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed, Actor* target) : Actor(x, y, collisionRadius, spriteFilePath, maxSpeed)
+Enemy::Enemy(float x, float y, float health,float collisionRadius, const char* spriteFilePath, float maxSpeed, Actor* target) : Actor(x, y, health, collisionRadius, spriteFilePath, maxSpeed)
 {
     m_globalTransform = new MathLibrary::Matrix3();
     m_localTransform = new MathLibrary::Matrix3();
@@ -40,28 +40,39 @@ bool Enemy::detectTarget(float maxAngle, float maxDistance)
 
 void Enemy::update(float deltatime)
 {
-    updateFacing();
-
-    if (checkCollision(m_target) == true)
-        onCollision(m_target);
-
-    setAcceleration(m_target->getLocalPosition() - getLocalPosition());
-    // [if] target is in range, follow
-    /*if (detectTarget(20, 20) == true)
+    if (!Game::getWin() && !Game::getLose())
     {
+        updateFacing();
+
+        if (checkCollision(m_target) == true && GetTime() > 3)
+            onCollision(m_target);
+
         setAcceleration(m_target->getLocalPosition() - getLocalPosition());
-    }*/
 
-    // [else] slow to a stop \WIP
-    /*else
+        // [if] target is in range, follow
+        /*if (detectTarget(20, 20) == true)
+        {
+            setAcceleration(m_target->getLocalPosition() - getLocalPosition());
+        }*/
+
+        // [else] slow to a stop \WIP
+        /*else
+        {
+            if ((getAcceleration().x || getAcceleration().y > 0) || (getAcceleration().x || getAcceleration().y < 0))
+                setAcceleration(MathLibrary::Vector2(0, 0));
+
+            if ((getVelocity().x || getVelocity().y > 0) || (getVelocity().x || getVelocity().y < 0))
+                setVelocity(MathLibrary::Vector2(0, 0));
+
+        }*/
+    }
+
+    else
     {
-        if ((getAcceleration().x || getAcceleration().y > 0) || (getAcceleration().x || getAcceleration().y < 0))
-            setAcceleration(MathLibrary::Vector2(0, 0));
-
-        if ((getVelocity().x || getVelocity().y > 0) || (getVelocity().x || getVelocity().y < 0))
-            setVelocity(MathLibrary::Vector2(0, 0));
-        
-    }*/
+        setVelocity(MathLibrary::Vector2(0, 0));
+        setAcceleration(MathLibrary::Vector2(0, 0));
+    }
+    
 
     Actor::update(deltatime);
 }
@@ -98,7 +109,7 @@ void Enemy::onCollision(Actor* other)
 {
     //setLocalPosition(MathLibrary::Vector2(2, 2));
 
-    //other->takeDamage();
+    other->takeDamage();
 
     Actor::onCollision(other);
 }

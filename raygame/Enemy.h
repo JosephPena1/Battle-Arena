@@ -7,7 +7,7 @@ class Enemy : public Actor
 
 public:
 	Enemy() :Actor() {}
-	Enemy(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed, Actor* target);
+	Enemy(float x, float y, float health, float collisionRadius, const char* spriteFilePath, float maxSpeed, Actor* target);
 	bool detectTarget(float maxAngle, float maxDistance);
 	void update(float deltatime) override;
 	void debug() override;
