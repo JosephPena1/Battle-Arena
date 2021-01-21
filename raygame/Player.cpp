@@ -45,8 +45,9 @@ void Player::debug()
 //updates the player's current facing
 void Player::updateFacing()
 {
-    if (m_velocity.getMagnitude() != 0)
-        setRotation(-(float)atan2(m_velocity.y, m_velocity.x));
+    if (IsCursorOnScreen(true))
+
+
 
     Actor::updateFacing();
 }
