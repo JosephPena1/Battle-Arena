@@ -35,6 +35,9 @@
     <ClCompile Include="Enemy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Bullet.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -55,9 +58,15 @@
     <ClInclude Include="Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Bullet.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\Player.png">
+      <Filter>Textures</Filter>
+    </Image>
+    <Image Include="C:\Users\jsupe\OneDrive\Pictures\Saved Pictures\bullet.png">
       <Filter>Textures</Filter>
     </Image>
   </ItemGroup>

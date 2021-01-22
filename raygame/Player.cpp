@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "raylib.h"
 #include "Sprite.h"
+#include "Bullet.h"
 #include <cmath>
 
 Player::Player(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed)
@@ -33,6 +34,9 @@ void Player::update(float deltaTime)
     //if left control is pressed down, slow down acceleration \WIP
     if (Game::getKeyDown(KEY_LEFT_CONTROL) == true)
         setAcceleration(getAcceleration() / 10);
+
+    if (Game::getKeyPressed(KEY_SPACE))
+        Game::getCurrentScene()->addActor(new Bullet(getWorldPosition().x, getWorldPosition().y, 2, "Textures/bullet.png", 5, getForward() * 5));
 
     Actor::update(deltaTime);
 }
