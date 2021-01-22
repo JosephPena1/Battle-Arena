@@ -1,7 +1,7 @@
 #include "Bullet.h"
 #include "Game.h"
 
-Bullet::Bullet(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed, MathLibrary::Vector2 velocity) : Actor(x, y, collisionRadius, spriteFilePath, maxSpeed)
+Bullet::Bullet(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed, MathLibrary::Vector2 velocity) : Actor(x, y, collisionRadius, spriteFilePath, maxSpeed, velocity)
 {
 	setVelocity(velocity);
 }
@@ -14,5 +14,9 @@ void Bullet::update(float deltaTime)
 		|| getWorldPosition().y < 0 || getWorldPosition().y > 30)
 
 		Game::destroy(this);
+}
 
+void Bullet::draw()
+{
+	Actor::draw();
 }

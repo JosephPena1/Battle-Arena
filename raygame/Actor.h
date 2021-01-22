@@ -10,6 +10,9 @@ class Actor
 public:
     Actor() {}
 
+
+    Actor(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed, MathLibrary::Vector2 velocity);
+
     /// <param name="x">Position on the x axis</param>
     /// <param name="y">Position on the y axis</param>
     /// <param name="collisionRadius">The size of the circle surrounding the actor that will be used to detect collisions.</param>

@@ -6,4 +6,5 @@ class Bullet : public Actor
 public:
 	Bullet(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed, MathLibrary::Vector2 velocity);
 	void update(float deltaTime) override;
+	void draw() override;
 };

@@ -4,6 +4,23 @@
 #include "Game.h"
 #include <cmath>
 
+Actor::Actor(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed, MathLibrary::Vector2 velocity)
+{
+    m_globalTransform = new MathLibrary::Matrix3();
+    m_localTransform = new MathLibrary::Matrix3();
+    m_rotation = new MathLibrary::Matrix3();
+    m_translation = new MathLibrary::Matrix3();
+    m_scale = new MathLibrary::Matrix3();
+
+    setLocalPosition(MathLibrary::Vector2(x, y));
+    m_velocity = MathLibrary::Vector2();
+    m_collisionRadius = collisionRadius;
+    m_childCount = 0;
+    m_maxSpeed = maxSpeed;
+    m_sprite = new Sprite(spriteFilePath);
+    m_collisionRadius = collisionRadius;
+}
+
 Actor::Actor(float x, float y, float health, float collisionRadius, char icon = ' ', float maxSpeed = 1)
 {
     m_globalTransform = new MathLibrary::Matrix3();
