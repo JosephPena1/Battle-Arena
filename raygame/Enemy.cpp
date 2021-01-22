@@ -3,9 +3,8 @@
 #include "raylib.h"
 #include "Sprite.h"
 #include <cmath>
-#include <iostream>
 
-Enemy::Enemy(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed)
+Enemy::Enemy(float x, float y, float health,float collisionRadius, const char* spriteFilePath, float maxSpeed, Actor* target) : Actor(x, y, health, collisionRadius, spriteFilePath, maxSpeed)
 {
     m_globalTransform = new MathLibrary::Matrix3();
     m_localTransform = new MathLibrary::Matrix3();
@@ -16,6 +15,7 @@ Enemy::Enemy(float x, float y, float collisionRadius, const char* spriteFilePath
     setLocalPosition(MathLibrary::Vector2(x, y));
     m_velocity = MathLibrary::Vector2();
     m_maxSpeed = maxSpeed;
+    m_target = target;
 }
 
 //Returns true if target is in sight, false if not
@@ -40,24 +40,41 @@ bool Enemy::detectTarget(float maxAngle, float maxDistance)
 
 void Enemy::update(float deltatime)
 {
-    updateFacing();
-
-    // [if] target is in range, follow
-    if (detectTarget(5, 5) == true)
+    if (!Game::getWin() && !Game::getLose())
     {
+        updateFacing();
+
+        //if player was hit, make immune for 1 second.
+        //if collision = true and time is > 3; call onCollision
+        if (checkCollision(m_target) == true && GetTime() > 3)
+            onCollision(m_target);
+
         setAcceleration(m_target->getLocalPosition() - getLocalPosition());
+
+        // [if] target is in range, follow
+        /*if (detectTarget(20, 20) == true)
+        {
+            setAcceleration(m_target->getLocalPosition() - getLocalPosition());
+        }*/
+
+        // [else] slow to a stop \WIP
+        /*else
+        {
+            if ((getAcceleration().x || getAcceleration().y > 0) || (getAcceleration().x || getAcceleration().y < 0))
+                setAcceleration(MathLibrary::Vector2(0, 0));
+
+            if ((getVelocity().x || getVelocity().y > 0) || (getVelocity().x || getVelocity().y < 0))
+                setVelocity(MathLibrary::Vector2(0, 0));
+
+        }*/
     }
 
-    // [else] slow to a stop \WIP
-    /*else
+    else
     {
-        if ((getAcceleration().x || getAcceleration().y > 0) || (getAcceleration().x || getAcceleration().y < 0))
-            setAcceleration(MathLibrary::Vector2(0, 0));
-
-        if ((getVelocity().x || getVelocity().y > 0) || (getVelocity().x || getVelocity().y < 0))
-            setVelocity(MathLibrary::Vector2(0, 0));
-        
-    }*/
+        setVelocity(MathLibrary::Vector2(0, 0));
+        setAcceleration(MathLibrary::Vector2(0, 0));
+    }
+    
 
     Actor::update(deltatime);
 }
@@ -69,22 +86,39 @@ void Enemy::debug()
 
 void Enemy::draw()
 {
-    DrawText(TextFormat("%f", getVelocity().x), 5, 5, 20, BLACK);
-    DrawText(TextFormat("%f", getVelocity().y), 5, 20, 20, BLACK);
+    //DrawCircle(getWorldPosition().x * 32, getWorldPosition().y * 32, 50, RED);
+    ////Draws the actor and a line indicating it facing to the raylib window
+    //DrawLine(
+    //    (int)(getWorldPosition().x * 32),
+    //    (int)(getWorldPosition().y * 32),
+    //    (int)((getWorldPosition().x + getForward().x) * 32),
+    //    (int)((getWorldPosition().y + getForward().y) * 32),
+    //    WHITE
+    //);
+
+    //if (m_sprite)
+    //    m_sprite->draw(*m_globalTransform);
 
     Actor::draw();
 }
-
 
 void Enemy::setTarget(Actor* target)
 {
     m_target = target;
 }
 
+void Enemy::onCollision(Actor* other)
+{
+    //setLocalPosition(MathLibrary::Vector2(2, 2));
+
+    other->takeDamage();
+
+    Actor::onCollision(other);
+}
+
 void Enemy::updateFacing()
 {
     
-
     if (m_velocity.getMagnitude() != 0)
         setRotation(-(float)atan2(m_velocity.y, m_velocity.x));
 

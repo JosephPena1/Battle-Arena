@@ -18,7 +18,7 @@ int main()
 	Game game = Game();
 
 	game.run();
-
+		
 	Vector2 test;
 	return 0;
 }

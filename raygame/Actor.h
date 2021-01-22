@@ -15,20 +15,20 @@ public:
     /// <param name="collisionRadius">The size of the circle surrounding the actor that will be used to detect collisions.</param>
     /// <param name="icon">The symbol that will appear when drawn</param>
     /// <param name="maxSpeed">The largest the magnitude of the actors velocity can be.</param>
-    Actor(float x, float y, float collisionRadius, char icon, float maxSpeed);
+    Actor(float x, float y, float health, float collisionRadius, char icon, float maxSpeed);
 
     /// <param name="x">Position on the x axis</param>
     /// <param name="y">Position on the y axis</param>
     /// <param name="collisionRadius">The size of the circle surrounding the actor that will be used to detect collisions.</param>
     /// <param name="sprite">That sprite that will be drawn in this actors draw function.</param>
-    Actor(float x, float y, float collisionRadius, Sprite* sprite, float maxSpeed);
+    Actor(float x, float y, float health, float collisionRadius, Sprite* sprite, float maxSpeed);
 
     /// <param name="x">Position on the x axis</param>
     /// <param name="y">Position on the y axis</param>
     /// <param name="collisionRadius">The size of the circle surrounding the actor that will be used to detect collisions.</param>
     /// <param name="sprite">That path for the sprite that will be drawn in this actors draw function.</param>
     /// <param name="maxSpeed">The largest the magnitude of the actors velocity can be.</param>
-    Actor(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed);
+    Actor(float x, float y, float health, float collisionRadius, const char* spriteFilePath, float maxSpeed);
 
     /// <summary>
     /// Deconstructor for Actors
@@ -123,6 +123,8 @@ public:
     /// <returns>The array containing the children attached to this actor.</returns>
     Actor** getChildren() { return m_children; }
 
+    void setSprite(const char* spriteFilePath);
+
     /// <summary>
     /// Changes the scale of the object to be the values given.
     /// </summary>
@@ -166,6 +168,8 @@ public:
     /// <param name="other">The actor this actor collided with.</param>
     virtual void onCollision(Actor* other);
 
+    virtual void takeDamage();
+
     virtual void update(float deltaTime);
     virtual void draw();
     virtual void debug();
@@ -195,6 +199,7 @@ protected:
     MathLibrary::Vector2 m_velocity;
     MathLibrary::Vector2 m_acceleration;
     float m_maxSpeed;
+    float m_health;
     char m_icon;
 
 private:

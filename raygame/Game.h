@@ -1,4 +1,6 @@
 #pragma once
+#include "Player.h"
+#include "Enemy.h"
 #include "Scene.h"
 class Camera2D;
 
@@ -63,6 +65,18 @@ public:
     /// <returns></returns>
     static bool getKeyPressed(int key);
 
+    static bool getWin() { return m_win; }
+
+    static bool getLose() { return m_lose; }
+
+    static bool getPlayerChoice() { return m_playerChoice; }
+
+    static void setWin(bool value);
+
+    static void setLose(bool value);
+
+    static void setPlayerChoice(bool value);
+
     /// <summary>
     /// Removes the actor from the scene, removes it from its parent, calls its end function, and deletes the actor.
     /// </summary>
@@ -70,7 +84,7 @@ public:
     static void destroy(Actor* actor);
 
     /// <summary>
-    /// Sets the game state to be the given value. If true, the game will end.
+    /// Sets the game state to be the given value. If true, the gameplay loop will end.
     /// </summary>
     /// <param name="value">The value to set game over.</param>
     static void setGameOver(bool value);
@@ -93,6 +107,9 @@ private:
 private:
     Camera2D* m_camera;
     static bool m_gameOver;
+    static bool m_win;
+    static bool m_lose;
+    static bool m_playerChoice;
 	static Scene** m_scenes;
     static int m_sceneCount;
     static int m_currentSceneIndex;

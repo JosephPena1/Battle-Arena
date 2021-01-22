@@ -5,7 +5,7 @@
 #include "Bullet.h"
 #include <cmath>
 
-Player::Player(float x, float y, float collisionRadius, const char* spriteFilePath, float maxSpeed)
+Player::Player(float x, float y, float health, float collisionRadius, const char* spriteFilePath, float maxSpeed) : Actor(x, y, health, collisionRadius, spriteFilePath, maxSpeed)
 {
     m_globalTransform = new MathLibrary::Matrix3();
     m_localTransform = new MathLibrary::Matrix3();
@@ -16,35 +16,100 @@ Player::Player(float x, float y, float collisionRadius, const char* spriteFilePa
     setLocalPosition(MathLibrary::Vector2(x, y));
     m_velocity = MathLibrary::Vector2();
     m_maxSpeed = maxSpeed;
+    m_health = health;
 }
 
 void Player::update(float deltaTime)
 {
-	updateFacing();
+    if (!Game::getWin() && !Game::getLose())
+    {
+        if (m_health <= 0)
+            Game::setLose(true);
+        else
+        {
+            updateFacing(); //fix
 
-	//controls for player
-    int xDirection = -Game::getKeyDown(KEY_A) + Game::getKeyDown(KEY_D);
-    int yDirection = -Game::getKeyDown(KEY_W) + Game::getKeyDown(KEY_S);
+            /*if (checkCollision(m_target) == true)
+            return false;*/
 
-    setAcceleration(MathLibrary::Vector2(xDirection, yDirection));
+            //controls for player
+            int xDirection = -Game::getKeyDown(KEY_A) + Game::getKeyDown(KEY_D);
+            int yDirection = -Game::getKeyDown(KEY_W) + Game::getKeyDown(KEY_S);
 
-    if (getVelocity().getMagnitude() > 0)
-        lookAt(getWorldPosition() + getVelocity().getNormalized());
+            setAcceleration(MathLibrary::Vector2(xDirection, yDirection));
 
-    //if left control is pressed down, slow down acceleration \WIP
-    if (Game::getKeyDown(KEY_LEFT_CONTROL) == true)
-        setAcceleration(getAcceleration() / 10);
+            /*if (getVelocity().getMagnitude() > 0)
+                lookAt(getWorldPosition() + getVelocity().getNormalized());*/
 
-    //if space is pressed once, shoot bullet \WIP
-    if (Game::getKeyPressed(KEY_SPACE))
-        Game::getCurrentScene()->addActor(new Bullet(getWorldPosition().x, getWorldPosition().y, 2, "Textures/bullet.png", 10, getVelocity() * 10));
+            //if left control is pressed down, slow down acceleration \WIP
+            if (Game::getKeyDown(KEY_LEFT_CONTROL) == true)
+            {
+                setAcceleration(getAcceleration() / 1.50f);
+                setVelocity(getVelocity() / 1.50f);
+            }
+          
+            //if space is pressed once, shoot bullet \WIP
+            if (Game::getKeyPressed(KEY_SPACE))
+                Game::getCurrentScene()->addActor(new Bullet(getWorldPosition().x, getWorldPosition().y, 2, "Textures/bullet.png", 10, getVelocity() * 10));
 
+            if (m_immuneFrames >= 70)
+            {
+                m_immuneTime++;
+                m_immuneFrames = 0;
+            }
+            else
+                m_immuneFrames++;
+        }
+    }
+
+    else
+    {
+        if (Game::getKeyDown(KEY_ENTER))
+        {
+            Game::setGameOver(true);
+        }
+
+        setVelocity(MathLibrary::Vector2(0, 0));
+        setAcceleration(MathLibrary::Vector2(0, 0));
+    }
     Actor::update(deltaTime);
 }
 
 void Player::debug()
 {
+}
 
+void Player::draw()
+{
+    if (!Game::getWin() && !Game::getLose())
+    {
+        if (m_immuneTime < 1)
+        {
+            Actor::draw();
+        }
+        else
+        {
+            setSprite("Images/Player.png");
+            Actor::draw();
+        }
+    }
+    else
+        Actor::draw();
+}
+
+void Player::onCollision(Actor* other)
+{
+    Actor::onCollision(other);
+}
+
+void Player::takeDamage()
+{
+    if (GetTime() > 2 && m_immuneTime > 1)
+    {
+        m_health -= 1;
+        m_immuneTime = 0;
+        setSprite("Images/PlayerHurt.png");
+    }
 }
 
 //updates the player's current facing

@@ -4,11 +4,13 @@
 #include "raylib.h"
 
 bool Game::m_gameOver = false;
+bool Game::m_win = false;
+bool Game::m_lose = false;
+bool Game::m_playerChoice = true;
 Scene** Game::m_scenes = new Scene*;
 int Game::m_sceneCount = 0;
 int Game::m_currentSceneIndex = 0;
 float countDown;
-
 
 Game::Game()
 {
@@ -37,17 +39,23 @@ void Game::start()
 
 	SetTargetFPS(60);
 
-	Player* player = new Player(10, 10, 5, "Images/player.png", 5);
-	Enemy* enemy = new Enemy(10, 20, 5, "Images/player.png", 2);
+	Player* player = new Player(10, 10, 3, 2, "Images/player.png", 5);
+	Enemy* enemy = new Enemy(10, 20, 2, 2, "Images/enemy.png", 2, player);
+	Enemy* enemy2 = new Enemy(5, 20, 2, 2, "Images/enemy.png", 2, player);
+
 	Scene* scene = new Scene();
-	enemy->setTarget(player);
+
+	player->setScale(MathLibrary::Vector2(3, 3));
+	enemy->setScale(MathLibrary::Vector2(3, 3));
+	enemy2->setScale(MathLibrary::Vector2(3, 3));
 
 	scene->addActor(player);
 	scene->addActor(enemy);
+	scene->addActor(enemy2);
 	addScene(scene);
 
-	startingTime = 5;
-	maxTime = 60 + startingTime;
+	startingTime = 0; //default 5
+	maxTime = 10 + startingTime; //default 60
 }
 
 void Game::update(float deltaTime)
@@ -59,6 +67,14 @@ void Game::update(float deltaTime)
 
 	countDown = startingTime - GetTime();
 	timeRemaining = maxTime - GetTime();
+
+	//when time runs out, give lose message, then gameOver = true
+	if (timeRemaining <= 0)
+	{
+		Game::m_lose = true;
+		//Game::setGameOver(true);
+	}
+		
 }
 
 void Game::draw()
@@ -76,7 +92,7 @@ void Game::draw()
 	//Draws the timer to the screen
 	if (countDown > 0)
 		DrawText(TextFormat("%f", countDown), 400, 1, 50, BLACK);
-	else 
+	else if (timeRemaining > 0)
 		DrawText(TextFormat("%f", timeRemaining), 400, 1, 50, BLACK);
 	
 	EndMode2D();
@@ -212,6 +228,21 @@ bool Game::getKeyDown(int key)
 bool Game::getKeyPressed(int key)
 {
 	return RAYLIB_H::IsKeyPressed((KeyboardKey)key);
+}
+
+void Game::setWin(bool value)
+{
+	m_win = value;
+}
+
+void Game::setLose(bool value)
+{
+	m_lose = value;
+}
+
+void Game::setPlayerChoice(bool value)
+{
+	m_playerChoice = value;
 }
 
 void Game::destroy(Actor* actor)

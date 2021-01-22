@@ -69,5 +69,11 @@
     <Image Include="C:\Users\jsupe\OneDrive\Pictures\Saved Pictures\bullet.png">
       <Filter>Textures</Filter>
     </Image>
+    <Image Include="Images\enemy.png">
+      <Filter>Textures</Filter>
+    </Image>
+    <Image Include="Images\PlayerHurt.png">
+      <Filter>Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
