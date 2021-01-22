@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "raylib.h"
 #include "Sprite.h"
+#include <typeinfo>
 #include <cmath>
 
 Enemy::Enemy(float x, float y, float health,float collisionRadius, const char* spriteFilePath, float maxSpeed, Actor* target) : Actor(x, y, health, collisionRadius, spriteFilePath, maxSpeed)
@@ -109,6 +110,12 @@ void Enemy::setTarget(Actor* target)
 
 void Enemy::onCollision(Actor* other)
 {
+    //for future reference
+    /*if (typeid(other) == typeid(Enemy()))
+    {
+
+    }*/
+
     //setLocalPosition(MathLibrary::Vector2(2, 2));
 
     other->takeDamage();

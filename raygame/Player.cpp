@@ -50,7 +50,7 @@ void Player::update(float deltaTime)
           
             //if space is pressed once, shoot bullet \WIP
             if (Game::getKeyPressed(KEY_SPACE))
-                Game::getCurrentScene()->addActor(new Bullet(getWorldPosition().x, getWorldPosition().y, 2, "Images/bullet.png", 10, getVelocity() * 10));
+                Game::getCurrentScene()->addActor(new Bullet(getWorldPosition().x, getWorldPosition().y, 2, "Images/bullettest.png", 10, getVelocity() * 10));
 
             if (m_immuneFrames >= 70)
             {

@@ -166,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Images\bullet.png" />
+    <Image Include="Images\bullettest.png" />
     <Image Include="Images\enemy.png" />
     <Image Include="Images\Player.png" />
     <Image Include="Images\PlayerHurt.png" />

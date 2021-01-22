@@ -7,7 +7,7 @@ class Player
 {
 
 public:
-	Player() : Actor() {}
+	Player() : Actor() {};
 	Player(float x, float y, float health, float collisionRadius, const char* spriteFilePath, float maxSpeed);
 	void update(float deltatime) override;
 	void debug() override;
