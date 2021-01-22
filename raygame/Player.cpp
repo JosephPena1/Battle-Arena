@@ -35,8 +35,9 @@ void Player::update(float deltaTime)
     if (Game::getKeyDown(KEY_LEFT_CONTROL) == true)
         setAcceleration(getAcceleration() / 10);
 
+    //if space is pressed once, shoot bullet \WIP
     if (Game::getKeyPressed(KEY_SPACE))
-        Game::getCurrentScene()->addActor(new Bullet(getWorldPosition().x, getWorldPosition().y, 2, "Textures/bullet.png", 5, getForward() * 5));
+        Game::getCurrentScene()->addActor(new Bullet(getWorldPosition().x, getWorldPosition().y, 2, "Textures/bullet.png", 10, getVelocity() * 10));
 
     Actor::update(deltaTime);
 }
