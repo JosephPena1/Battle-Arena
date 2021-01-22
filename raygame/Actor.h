@@ -123,6 +123,8 @@ public:
     /// <returns>The array containing the children attached to this actor.</returns>
     Actor** getChildren() { return m_children; }
 
+    void setSprite(const char* spriteFilePath);
+
     /// <summary>
     /// Changes the scale of the object to be the values given.
     /// </summary>

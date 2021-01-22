@@ -44,6 +44,8 @@ void Enemy::update(float deltatime)
     {
         updateFacing();
 
+        //if player was hit, make immune for 1 second.
+        //if collision = true and time is > 3; call onCollision
         if (checkCollision(m_target) == true && GetTime() > 3)
             onCollision(m_target);
 

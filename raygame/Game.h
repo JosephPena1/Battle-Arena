@@ -83,8 +83,6 @@ public:
     /// <param name="actor">The actor that will be deleted.</param>
     static void destroy(Actor* actor);
 
-    void restart();
-
     /// <summary>
     /// Sets the game state to be the given value. If true, the gameplay loop will end.
     /// </summary>
@@ -107,9 +105,6 @@ private:
 	void end();
 
 private:
-    Player* player;
-    Enemy* enemy;
-    Enemy* enemy2;
     Camera2D* m_camera;
     static bool m_gameOver;
     static bool m_win;

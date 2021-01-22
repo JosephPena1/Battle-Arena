@@ -29,6 +29,7 @@ Actor::Actor(float x, float y, float health, float collisionRadius, Sprite* spri
 Actor::Actor(float x, float y, float health, float collisionRadius, const char* spriteFilePath, float maxSpeed = 1) : Actor(x, y, collisionRadius, ' ', maxSpeed)
 {
     m_sprite = new Sprite(spriteFilePath);
+    m_collisionRadius = collisionRadius;
 }
 
 Actor::~Actor()
@@ -194,6 +195,11 @@ bool Actor::removeChild(Actor* child)
     return actorRemoved;
 }
 
+void Actor::setSprite(const char* spriteFilePath)
+{
+    m_sprite = new Sprite(spriteFilePath);
+}
+
 void Actor::setScale(MathLibrary::Vector2 scale)
 {
     *m_scale = MathLibrary::Matrix3::createScale(scale);
@@ -251,7 +257,7 @@ void Actor::onCollision(Actor* other)
 
 void Actor::takeDamage()
 {
-    m_health -= 1;
+
 }
 
 void Actor::update(float deltaTime)
@@ -295,14 +301,12 @@ void Actor::draw()
         if (Game::getWin() == true)
         {
             DrawText("You Win!", 10, 10, 30, BLACK);
-            DrawText("[ENTER] Play Again?", 10, 35, 30, BLACK);
-            DrawText("[ESC] Quit?", 10, 60, 30, BLACK);
+            DrawText("[ENTER]/[ESC] Quit", 10, 35, 30, BLACK);
         }
         else
         {
             DrawText("You Lose!", 10, 10, 30, BLACK);
-            DrawText("[ENTER] Play Again?", 10, 35, 30, BLACK);
-            DrawText("[ESC] Quit?", 10, 60, 30, BLACK);
+            DrawText("[ENTER]/[ESC] Quit", 10, 35, 30, BLACK);
         }
         
     }

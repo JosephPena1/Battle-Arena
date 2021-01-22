@@ -2,7 +2,8 @@
 
 #include "Actor.h"
 
-class Player : public Actor
+class Player
+	: public Actor
 {
 
 public:
@@ -17,4 +18,8 @@ public:
 
 protected:
 	void updateFacing() override;
+
+private:
+	float m_immuneFrames;
+	float m_immuneTime;
 };

@@ -39,9 +39,9 @@ void Game::start()
 
 	SetTargetFPS(60);
 
-	player = new Player(10, 10, 3, 5, "Images/player.png", 5);
-	enemy = new Enemy(10, 20, 2, 5, "Images/enemy.png", 2, player);
-	enemy2 = new Enemy(5, 20, 2, 5, "Images/enemy.png", 2, player);
+	Player* player = new Player(10, 10, 3, 2, "Images/player.png", 5);
+	Enemy* enemy = new Enemy(10, 20, 2, 2, "Images/enemy.png", 2, player);
+	Enemy* enemy2 = new Enemy(5, 20, 2, 2, "Images/enemy.png", 2, player);
 
 	Scene* scene = new Scene();
 
@@ -119,8 +119,6 @@ void Game::run()
 		update(deltaTime);
 		draw();
 	}
-	/*if (m_playerChoice == true)
-		restart();*/
 
 	end();
 }
@@ -254,23 +252,6 @@ void Game::destroy(Actor* actor)
 		actor->getParent()->removeChild(actor);
 	actor->end();
 	delete actor;
-}
-
-void Game::restart()
-{
-	m_playerChoice = false;
-	m_gameOver = false;
-	Scene* scene = getCurrentScene();
-
-	scene->removeActor(player);
-	scene->removeActor(enemy);
-	scene->removeActor(enemy2);
-	delete player;
-	delete enemy;
-	delete enemy2;
-
-	end();
-	run();
 }
 
 void Game::setGameOver(bool value)

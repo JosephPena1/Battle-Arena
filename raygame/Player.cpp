@@ -22,25 +22,38 @@ void Player::update(float deltaTime)
 {
     if (!Game::getWin() && !Game::getLose())
     {
-        updateFacing(); //fix
+        if (m_health <= 0)
+            Game::setLose(true);
+        else
+        {
+            updateFacing(); //fix
 
-        /*if (checkCollision(m_target) == true)
+            /*if (checkCollision(m_target) == true)
             return false;*/
 
-        //controls for player
-        int xDirection = -Game::getKeyDown(KEY_A) + Game::getKeyDown(KEY_D);
-        int yDirection = -Game::getKeyDown(KEY_W) + Game::getKeyDown(KEY_S);
+            //controls for player
+            int xDirection = -Game::getKeyDown(KEY_A) + Game::getKeyDown(KEY_D);
+            int yDirection = -Game::getKeyDown(KEY_W) + Game::getKeyDown(KEY_S);
 
-        setAcceleration(MathLibrary::Vector2(xDirection, yDirection));
+            setAcceleration(MathLibrary::Vector2(xDirection, yDirection));
 
-        /*if (getVelocity().getMagnitude() > 0)
-            lookAt(getWorldPosition() + getVelocity().getNormalized());*/
+            /*if (getVelocity().getMagnitude() > 0)
+                lookAt(getWorldPosition() + getVelocity().getNormalized());*/
 
-        //if left control is pressed down, slow down acceleration \WIP
-        if (Game::getKeyDown(KEY_LEFT_CONTROL) == true)
-        {
-            setAcceleration(getAcceleration() / 1.50f);
-            setVelocity(getVelocity() / 1.50f);
+                //if left control is pressed down, slow down acceleration \WIP
+            if (Game::getKeyDown(KEY_LEFT_CONTROL) == true)
+            {
+                setAcceleration(getAcceleration() / 1.50f);
+                setVelocity(getVelocity() / 1.50f);
+            }
+
+            if (m_immuneFrames >= 70)
+            {
+                m_immuneTime++;
+                m_immuneFrames = 0;
+            }
+            else
+                m_immuneFrames++;
         }
     }
 
@@ -48,43 +61,36 @@ void Player::update(float deltaTime)
     {
         if (Game::getKeyDown(KEY_ENTER))
         {
-            Game::setWin(false);
-            Game::setLose(false);
-            Game::setPlayerChoice(true);
             Game::setGameOver(true);
         }
-        else
-            Game::setGameOver(true);
 
         setVelocity(MathLibrary::Vector2(0, 0));
         setAcceleration(MathLibrary::Vector2(0, 0));
     }
 	
-
     Actor::update(deltaTime);
 }
 
 void Player::debug()
 {
-
 }
 
 void Player::draw()
 {
-    //DrawCircle(getWorldPosition().x * 32, getWorldPosition().y * 32, 50, DARKBLUE);
-    ////Draws the actor and a line indicating it facing to the raylib window
-    //DrawLine(
-    //    (int)(getWorldPosition().x * 32),
-    //    (int)(getWorldPosition().y * 32),
-    //    (int)((getWorldPosition().x + getForward().x) * 32),
-    //    (int)((getWorldPosition().y + getForward().y) * 32),
-    //    WHITE
-    //);
-
-    //if (m_sprite)
-    //    m_sprite->draw(*m_globalTransform);
-
-    Actor::draw();
+    if (!Game::getWin() && !Game::getLose())
+    {
+        if (m_immuneTime < 1)
+        {
+            Actor::draw();
+        }
+        else
+        {
+            setSprite("Images/Player.png");
+            Actor::draw();
+        }
+    }
+    else
+        Actor::draw();
 }
 
 void Player::onCollision(Actor* other)
@@ -94,9 +100,12 @@ void Player::onCollision(Actor* other)
 
 void Player::takeDamage()
 {
-    m_health -= 1;
-
-    Actor::takeDamage();
+    if (GetTime() > 2 && m_immuneTime > 1)
+    {
+        m_health -= 1;
+        m_immuneTime = 0;
+        setSprite("Images/PlayerHurt.png");
+    }
 }
 
 //updates the player's current facing
