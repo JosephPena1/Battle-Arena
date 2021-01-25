@@ -165,6 +165,8 @@ public:
     /// <returns>Returns true if the distance between the two actors is less than their combined radii.</returns>
     bool checkCollision(Actor* other);
 
+    const char* getFilePath();
+
     /// <summary>
     /// Called when a collision between this actor and another occurs. 
     /// </summary>
@@ -210,5 +212,6 @@ private:
     float m_collisionRadius;
     Actor* m_parent;
     int m_childCount;
+    const char* m_filePath;
     Sprite* m_sprite;
 };

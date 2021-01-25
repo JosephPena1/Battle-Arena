@@ -214,6 +214,7 @@ bool Actor::removeChild(Actor* child)
 
 void Actor::setSprite(const char* spriteFilePath)
 {
+    m_filePath = spriteFilePath;
     m_sprite = new Sprite(spriteFilePath);
 }
 
@@ -267,6 +268,11 @@ bool Actor::checkCollision(Actor* other)
     return distance <= m_collisionRadius + other->m_collisionRadius;
 }
 
+const char* Actor::getFilePath()
+{
+    return m_filePath;
+}
+
 void Actor::onCollision(Actor* other)
 {
 
@@ -299,13 +305,13 @@ void Actor::draw()
     {
         //DrawCircle(getWorldPosition().x * 32, getWorldPosition().y * 32, 50, BLUE);
         //Draws the actor and a line indicating it facing to the raylib window
-        DrawLine(
+        /*DrawLine(
             (int)(getWorldPosition().x * 32),
             (int)(getWorldPosition().y * 32),
             (int)((getWorldPosition().x + getForward().x) * 32),
             (int)((getWorldPosition().y + getForward().y) * 32),
             WHITE
-        );
+        );*/
 
         if (m_sprite)
             m_sprite->draw(*m_globalTransform);

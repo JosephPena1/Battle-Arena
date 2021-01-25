@@ -50,7 +50,7 @@ void Player::update(float deltaTime)
           
             //if space is pressed once, shoot bullet \WIP
             if (Game::getKeyPressed(KEY_SPACE))
-                Game::getCurrentScene()->addActor(new Bullet(getWorldPosition().x, getWorldPosition().y, 2, "Images/bullet.png", 10, getForward() * 10));
+                Game::getCurrentScene()->addActor(new Bullet(getWorldPosition().x, getWorldPosition().y, 2, "Images/bullettest.png", 10, getVelocity() * 10));
 
             if (m_immuneFrames >= 70)
             {
@@ -85,16 +85,21 @@ void Player::draw()
     {
         if (m_immuneTime < 1)
         {
+            DrawText(TextFormat("%f", m_health), 850, 15, 30, BLACK);
             Actor::draw();
         }
         else
         {
-            setSprite("Images/Player.png");
+            DrawText(TextFormat("%f", m_health), 850, 15, 30, BLACK);
+            if (getFilePath() != "Images/Player.png")
+                setSprite("Images/Player.png");
             Actor::draw();
         }
     }
     else
+    {
         Actor::draw();
+    }
 }
 
 void Player::onCollision(Actor* other)

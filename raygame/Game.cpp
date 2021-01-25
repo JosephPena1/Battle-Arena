@@ -39,23 +39,19 @@ void Game::start()
 
 	SetTargetFPS(60);
 
-	Player* player = new Player(10, 10, 3, 2, "Images/player.png", 5);
-	Enemy* enemy = new Enemy(10, 20, 2, 2, "Images/enemy.png", 2, player);
-	Enemy* enemy2 = new Enemy(5, 20, 2, 2, "Images/enemy.png", 2, player);
-
 	Scene* scene = new Scene();
 
-	player->setScale(MathLibrary::Vector2(3, 3));
-	enemy->setScale(MathLibrary::Vector2(3, 3));
-	enemy2->setScale(MathLibrary::Vector2(3, 3));
-
-	scene->addActor(player);
-	scene->addActor(enemy);
-	scene->addActor(enemy2);
 	addScene(scene);
 
-	startingTime = 60; //default 5
-	maxTime = 10 + startingTime; //default 60
+	Player* player = new Player(25, 11, 3, 1.5f, "Images/player.png", 5);
+	Enemy::createEnemies(100, player);
+
+	player->setScale(MathLibrary::Vector2(3, 3));
+
+	scene->addActor(player);
+
+	startingTime = 0; //default 5
+	maxTime = 60 + startingTime; //default 60
 }
 
 void Game::update(float deltaTime)
