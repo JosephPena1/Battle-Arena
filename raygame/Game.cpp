@@ -55,7 +55,7 @@ void Game::start()
 	addScene(scene);
 
 	startingTime = 0; //default 5
-	maxTime = 10 + startingTime; //default 60
+	maxTime = 60 + startingTime; //default 60
 }
 
 void Game::update(float deltaTime)

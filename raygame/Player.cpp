@@ -85,16 +85,20 @@ void Player::draw()
     {
         if (m_immuneTime < 1)
         {
+            DrawText(TextFormat("%f", m_health), 850, 15, 30, BLACK);
             Actor::draw();
         }
         else
         {
+            DrawText(TextFormat("%f", m_health), 850, 15, 30, BLACK);
             setSprite("Images/Player.png");
             Actor::draw();
         }
     }
     else
+    {
         Actor::draw();
+    }
 }
 
 void Player::onCollision(Actor* other)
