@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "raylib.h"
 #include "Sprite.h"
+#include <random>
 #include <typeinfo>
 #include <cmath>
 
@@ -103,6 +104,19 @@ void Enemy::draw()
     Actor::draw();
 }
 
+void Enemy::createEnemies(int enemyCount, Actor* target)
+{
+    Enemy** enemies = new Enemy*[enemyCount];
+    Scene* currentScene = Game::getCurrentScene();
+
+    for (int i = 0; i < enemyCount; i++)
+    {
+        enemies[i] = new Enemy(GetRandomValue(0, -15), GetRandomValue(0, 30), 2, 1.5f, "Images/enemy.png", 2, target);
+        enemies[i]->setScale(MathLibrary::Vector2(2, 2));
+        currentScene->addActor(enemies[i]);
+    }
+}
+
 void Enemy::setTarget(Actor* target)
 {
     m_target = target;
@@ -125,7 +139,6 @@ void Enemy::onCollision(Actor* other)
 
 void Enemy::updateFacing()
 {
-    
     if (m_velocity.getMagnitude() != 0)
         setRotation(-(float)atan2(m_velocity.y, m_velocity.x));
 

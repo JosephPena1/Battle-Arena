@@ -91,7 +91,8 @@ void Player::draw()
         else
         {
             DrawText(TextFormat("%f", m_health), 850, 15, 30, BLACK);
-            setSprite("Images/Player.png");
+            if (getFilePath() != "Images/Player.png")
+                setSprite("Images/Player.png");
             Actor::draw();
         }
     }

@@ -12,6 +12,8 @@ void Bullet::update(float deltaTime)
 {
 	Actor::update(deltaTime);
 
+	updateFacing();
+
 	if (getWorldPosition().x < 0 || getWorldPosition().x > 50
 		|| getWorldPosition().y < 0 || getWorldPosition().y > 30)
 

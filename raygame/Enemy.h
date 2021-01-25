@@ -13,12 +13,14 @@ public:
 	void update(float deltatime) override;
 	void debug() override;
 	void draw() override;
+	static void createEnemies(int enemyCount, Actor* target);
 
 	void setTarget(Actor* target);
 	void onCollision(Actor* other) override;
 
 protected:
 	void updateFacing() override;
+	//Enemy** m_enemies;
 
 private:
 	Actor* m_target;
