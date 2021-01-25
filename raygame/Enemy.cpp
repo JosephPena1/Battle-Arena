@@ -116,6 +116,11 @@ void Enemy::onCollision(Actor* other)
     Actor::onCollision(other);
 }
 
+void Enemy::takeDamage()
+{
+    m_health -= 1;
+}
+
 void Enemy::updateFacing()
 {
     

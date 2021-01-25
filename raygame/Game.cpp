@@ -54,7 +54,7 @@ void Game::start()
 	scene->addActor(enemy2);
 	addScene(scene);
 
-	startingTime = 0; //default 5
+	startingTime = 60; //default 5
 	maxTime = 10 + startingTime; //default 60
 }
 
