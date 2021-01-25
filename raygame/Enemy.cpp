@@ -137,6 +137,11 @@ void Enemy::onCollision(Actor* other)
     Actor::onCollision(other);
 }
 
+void Enemy::takeDamage()
+{
+    m_health -= 1;
+}
+
 void Enemy::updateFacing()
 {
     if (m_velocity.getMagnitude() != 0)

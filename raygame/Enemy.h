@@ -17,6 +17,7 @@ public:
 
 	void setTarget(Actor* target);
 	void onCollision(Actor* other) override;
+	void takeDamage();
 
 protected:
 	void updateFacing() override;

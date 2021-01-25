@@ -11,4 +11,5 @@ public:
 
 protected:
 	void updateFacing() override;
+	void onCollision(Actor* other) override;
 };
