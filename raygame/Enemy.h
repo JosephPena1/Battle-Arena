@@ -15,6 +15,7 @@ public:
 	void draw() override;
 	static void createEnemies(int enemyCount, Actor* target);
 
+	void setEnemyCounter(int count);
 	void setTarget(Actor* target);
 	void onCollision(Actor* other) override;
 	void takeDamage();

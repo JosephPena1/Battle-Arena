@@ -43,15 +43,15 @@ void Game::start()
 
 	addScene(scene);
 
-	Player* player = new Player(25, 11, 3, 1.5f, "Images/player.png", 5);
-	Enemy::createEnemies(100, player);
+	Player* player = new Player(25, 11, 3, 1.5f, "Images/player.png", 3);
+	Enemy::createEnemies(50, player);
 
 	player->setScale(MathLibrary::Vector2(3, 3));
 
 	scene->addActor(player);
 
 	startingTime = 0; //default 5
-	maxTime = 60 + startingTime; //default 60
+	maxTime = 30 + startingTime; //default 60
 }
 
 void Game::update(float deltaTime)
@@ -67,8 +67,7 @@ void Game::update(float deltaTime)
 	//when time runs out, give lose message, then gameOver = true
 	if (timeRemaining <= 0)
 	{
-		Game::m_lose = true;
-		//Game::setGameOver(true);
+		Game::m_win = true;
 	}
 		
 }

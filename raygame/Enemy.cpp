@@ -111,7 +111,7 @@ void Enemy::createEnemies(int enemyCount, Actor* target)
 
     for (int i = 0; i < enemyCount; i++)
     {
-        enemies[i] = new Enemy(GetRandomValue(0, -15), GetRandomValue(0, 30), 2, 1.5f, "Images/enemy.png", 2, target);
+        enemies[i] = new Enemy(GetRandomValue(5, -10), GetRandomValue(0, 30), 2, 1.5f, "Images/enemy.png", 2, target);
         enemies[i]->setScale(MathLibrary::Vector2(2, 2));
         currentScene->addActor(enemies[i]);
     }
@@ -124,14 +124,6 @@ void Enemy::setTarget(Actor* target)
 
 void Enemy::onCollision(Actor* other)
 {
-    //for future reference
-    /*if (typeid(other) == typeid(Enemy()))
-    {
-
-    }*/
-
-    //setLocalPosition(MathLibrary::Vector2(2, 2));
-
     other->takeDamage();
 
     Actor::onCollision(other);
