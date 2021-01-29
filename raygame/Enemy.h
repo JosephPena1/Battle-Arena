@@ -13,16 +13,21 @@ public:
 	void update(float deltatime) override;
 	void debug() override;
 	void draw() override;
+
+	/// <summary>
+	/// Creates the given number of enemies and adds them to the scene. 
+	/// </summary>
+	/// <param name="enemyCount">The amount of enemies created.</param>
+	/// <param name="target">The collision target</param>
 	static void createEnemies(int enemyCount, Actor* target);
 
-	void setEnemyCounter(int count);
+	//sets collision target for enemy
 	void setTarget(Actor* target);
 	void onCollision(Actor* other) override;
 	void takeDamage();
 
 protected:
 	void updateFacing() override;
-	//Enemy** m_enemies;
 
 private:
 	Actor* m_target;

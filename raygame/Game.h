@@ -65,17 +65,17 @@ public:
     /// <returns></returns>
     static bool getKeyPressed(int key);
 
+    //returns m_win
     static bool getWin() { return m_win; }
 
+    //returns m_lose
     static bool getLose() { return m_lose; }
 
-    static bool getPlayerChoice() { return m_playerChoice; }
-
+    //sets m_win
     static void setWin(bool value);
 
+    //sets m_lose
     static void setLose(bool value);
-
-    static void setPlayerChoice(bool value);
 
     /// <summary>
     /// Removes the actor from the scene, removes it from its parent, calls its end function, and deletes the actor.
@@ -93,11 +93,6 @@ public:
     static MathLibrary::Matrix3* getWorld();
     void run();
 
-    /// <summary>
-    /// returns true or false whether the player has run out of time to kill enemies 
-    /// </summary>
-    bool timer();
-
 private:
 	void start();
 	void update(float delaTime);
@@ -107,9 +102,8 @@ private:
 private:
     Camera2D* m_camera;
     static bool m_gameOver;
-    static bool m_win;
-    static bool m_lose;
-    static bool m_playerChoice;
+    static bool m_win; //determines if player won
+    static bool m_lose; //determines if player lost
 	static Scene** m_scenes;
     static int m_sceneCount;
     static int m_currentSceneIndex;

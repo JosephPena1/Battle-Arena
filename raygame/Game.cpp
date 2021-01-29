@@ -6,7 +6,6 @@
 bool Game::m_gameOver = false;
 bool Game::m_win = false;
 bool Game::m_lose = false;
-bool Game::m_playerChoice = true;
 Scene** Game::m_scenes = new Scene*;
 int Game::m_sceneCount = 0;
 int Game::m_currentSceneIndex = 0;
@@ -235,11 +234,6 @@ void Game::setLose(bool value)
 	m_lose = value;
 }
 
-void Game::setPlayerChoice(bool value)
-{
-	m_playerChoice = value;
-}
-
 void Game::destroy(Actor* actor)
 {
 	getCurrentScene()->removeActor(actor);
@@ -252,13 +246,4 @@ void Game::destroy(Actor* actor)
 void Game::setGameOver(bool value)
 {
 	Game::m_gameOver = value;
-}
-
-bool Game::timer()
-{
-	if (GetTime() - maxTime == 0)
-	{
-		return true;
-	}
-	return false;
 }
